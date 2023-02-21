@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace Selenium_Specflow_POC.src.test.tests
 {
     [TestFixture]
-    internal class LoginTests : BaseTest
+    internal class SearchTests : BaseTest
     {
         [Test]
-        public void GoogleSearch()
+        public void Search()
         {
             LoginPage login = new LoginPage(GetDriver());
             SearchResultsPage searchResults = new SearchResultsPage(GetDriver());
@@ -25,7 +25,7 @@ namespace Selenium_Specflow_POC.src.test.tests
         }
 
         [Test]
-        public void GoogleSiteNav()
+        public void ImFeelingLuckyTest()
         {
             LoginPage login = new LoginPage(GetDriver());
             SearchResultsPage searchResults = new SearchResultsPage(GetDriver());

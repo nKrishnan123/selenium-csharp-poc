@@ -13,7 +13,6 @@ namespace Selenium_Specflow_POC.src.main.selenium.baseItem
 {
     internal class BaseTest
     {
-  //      protected IWebDriver driver;
         protected static ThreadLocal<IWebDriver> tDriver = new ThreadLocal<IWebDriver>();
 
         protected void SetDriver(IWebDriver driver)
@@ -30,7 +29,6 @@ namespace Selenium_Specflow_POC.src.main.selenium.baseItem
         public void StartDriver()
         {
             SetDriver(new DriverManager().InitializeDriver());
-  //          driver = new DriverManager().InitializeDriver();
             GetDriver().Navigate().GoToUrl(TestConstants.url);
         }
 

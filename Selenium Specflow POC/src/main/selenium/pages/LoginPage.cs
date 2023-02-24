@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using Selenium_Specflow_POC.src.main.selenium.baseItem;
 using System;
 using System.Collections.Generic;
@@ -11,28 +12,64 @@ namespace Selenium_Specflow_POC.src.main.selenium.pages
     internal class LoginPage : BasePage
     {
 
-        public By searchBox = By.XPath("//*[@title='Search']");
-        public By searchButton = By.XPath("//div[@class='lJ9FBc']//input[@name='btnK']");
-        public By luckyButton = By.XPath("//div[@class='lJ9FBc']//input[@name='btnI']");
+        public By signInIcon = By.XPath("//*[@id='meControl']//*[text()='Sign in']");
+        public By emailTxtBox = By.XPath("//*[@name='loginfmt']");
+        public By nextButton = By.XPath("//*[@value='Next']");
+        public By pwdTxtBox = By.XPath("//*[@name='passwd']");
+        public By signInButton = By.XPath("//*[@value='Sign in']");
+        public By askLaterButton = By.XPath("//*[@id='btnAskLater']");
+        public By staySignedInButton = By.XPath("//*[@id='idBtn_Back']");
+
+        WebDriverWait wait;
+
         public LoginPage(IWebDriver driver) : base(driver) 
         {
             this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
         }
 
-        public void EnterSearchText(String text)
+        public void NavigateToSignInPage()
         {
-            driver.FindElement(searchBox).Click();
-            driver.FindElement(searchBox).SendKeys(text);
+            IWebElement eleSignInIcon = wait.Until(
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(signInIcon));
+            eleSignInIcon.Click();
+            
         }
 
-        public void ClickSearch()
+        public void login(string email, string pwd)
         {
-            driver.FindElement(searchButton).Click();
+            EnterEmail(email);
+            EnterPassword(pwd);
         }
 
-        public void ClickLucky()
+        public void EnterEmail(string email)
         {
-            driver.FindElement(luckyButton).Click();
+            IWebElement eleEmail = wait.Until(
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(emailTxtBox));
+
+            eleEmail.Click();
+            eleEmail.SendKeys(email);
+            driver.FindElement(nextButton).Click();
+        }
+
+        public void EnterPassword(string pwd)
+        {
+            IWebElement elePassword = wait.Until(
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(pwdTxtBox));
+            elePassword.Click();
+            elePassword.SendKeys(pwd);
+            driver.FindElement(signInButton).Click();
+        }
+
+        public void SkipAuth()
+        {
+            IWebElement eleAskLater = wait.Until(
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(askLaterButton));
+            eleAskLater.Click();
+
+            IWebElement eleStaySignedIn = wait.Until(
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(staySignedInButton));
+            eleStaySignedIn.Click();
         }
  
     }

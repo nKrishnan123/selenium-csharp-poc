@@ -11,19 +11,21 @@ using System.Threading.Tasks;
 namespace Selenium_Specflow_POC.src.test.tests
 {
     [TestFixture]
-    internal class LoginTests : BaseTest
+    internal class AppPageTests : BaseTest
     {
         [Test]
-        public void LoginToOffice365()
+        public void ViewAllApps()
         {
             LoginPage loginPage = new LoginPage(GetDriver());
             HomePage homePage = new HomePage(GetDriver());
+            AppPage appPage = new AppPage(GetDriver());
 
             loginPage.NavigateToSignInPage();
             loginPage.login(TestConstants.email, TestConstants.password);
             loginPage.SkipAuth();
-
-            Assert.That(homePage.GetPageHeading(), Is.EqualTo("Welcome to Microsoft 365"));
+            homePage.NavigateToAppPage();
+            appPage.ClickAllApps();
+            Assert.True(appPage.AreAllAddInOptionsDisplayed());
         }
     }
 }
